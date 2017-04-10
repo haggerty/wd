@@ -1,4 +1,4 @@
-# wd
+# wd (Waveform Digitizer)
 
 ## wd40
 
