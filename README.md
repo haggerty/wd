@@ -16,4 +16,4 @@ many of the macros rely on hard-coded channel locations in the data.
 wd409 is code the builds in the sPHENIX environment to take a "prdf" (PHENIX Raw Data Format) file and convert it to a ROOT TTree (W) 
 for the "new" ADC system being developed at Columbia University for the sPHENIX electromagnetic and hadronic calorimeters
 
-The macros directoy contains analysis code that was to analyze W TTree's taken in the HCAL lab at BNL.
+The macros directory contains analysis code that was to analyze W TTree's taken in the HCAL lab at BNL.
