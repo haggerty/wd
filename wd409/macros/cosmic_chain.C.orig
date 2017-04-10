@@ -1,0 +1,14 @@
+{
+
+  TChain chain("W");
+  chain.Add("../root/cosmics_test1.root");
+  chain.Add("../root/cosmics_test2.root");
+  chain.Add("../root/cosmics_test3.root");
+  chain.Add("../root/cosmics_test5.root");
+  chain.Add("../root/cosmics_test6.root");
+  chain.Add("../root/cosmics_test7.root");
+  chain.Add("../root/cosmics_test8.root");
+  chain.Add("../root/cosmics_test9.root");
+
+}
+
