@@ -1,6 +1,7 @@
 wd40
 wd409
 
+*.root
 *.pdf
 *.png
 *.dat
