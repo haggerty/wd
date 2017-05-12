@@ -69,9 +69,23 @@ int wd409( const char *filename, const char *outputfile )
   W.Branch("evtnr",&wd->evtnr,"evtnr/I"); 
   W.Branch("clock",&wd->clock,"clock/I"); 
 
+  // Trailer words
+
+  TString branchstring = "evenchcksum/I";
+  W.Branch("evenchecksum",wd->evenchecksum,branchstring); 
+  
+  branchstring = "calcevenchcksum/I";
+  W.Branch("calcevenchecksum",wd->calcevenchecksum,branchstring); 
+
+  branchstring = "oddchcksum/I";
+  W.Branch("oddchecksum",wd->oddchecksum,branchstring); 
+  
+  branchstring = "calcoddchcksum/I";
+  W.Branch("calcoddchecksum",wd->calcoddchecksum,branchstring); 
+
   // begin words from FEM header
 
-  TString branchstring = "femslot[";
+  branchstring = "femslot[";
   branchstring += NRMOD;
   branchstring += "]/I";
   W.Branch("femslot",wd->femslot,branchstring); 
@@ -86,26 +100,6 @@ int wd409( const char *filename, const char *outputfile )
   branchstring += "]/I";
   W.Branch("femclock",wd->femclock,branchstring); 
   
-  branchstring = "evenchcksum[";
-  branchstring += NRMOD;
-  branchstring += "]/I";
-  W.Branch("evenchecksum",wd->evenchecksum,branchstring); 
-  
-  branchstring = "calcevenchcksum[";
-  branchstring += NRMOD;
-  branchstring += "]/I";
-  W.Branch("calcevenchecksum",wd->calcevenchecksum,branchstring); 
-
-  branchstring = "oddchcksum[";
-  branchstring += NRMOD;
-  branchstring += "]/I";
-  W.Branch("oddchecksum",wd->oddchecksum,branchstring); 
-  
-  branchstring = "calcoddchcksum[";
-  branchstring += NRMOD;
-  branchstring += "]/I";
-  W.Branch("calcoddchecksum",wd->calcoddchecksum,branchstring); 
-
   // end words from FEM header
 
   // adc
