@@ -3,8 +3,8 @@
 
 #include "TObject.h"
 
-static const int NRMOD = 1;
-static const int NMODBYXMIT[] = {1};
+static const int NRMOD = 3;
+static const int NMODBYXMIT[] = {3};
 
 static const int NXMIT = sizeof(NMODBYXMIT)/sizeof(*NMODBYXMIT);
 static const int PACKET[NXMIT] = {21351};
@@ -18,13 +18,17 @@ class wd409data
 
  public:
   int runnumber;
-  int eventnumber;
+  int evtnr;
+  int clock;
+
+  int evenchecksum;
+  int calcevenchecksum;
+  int oddchecksum;
+  int calcoddchecksum;
 
   int femslot[NRMOD];
   int femevtnr[NRMOD];
   int femclock[NRMOD];
-  int evenchecksum[NRMOD];
-  int calcevenchecksum[NRMOD];
 
   int adc[NRMOD*NCHANPERMOD][NRSAM];
   float mean[NRMOD*NCHANPERMOD];

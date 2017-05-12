@@ -66,7 +66,8 @@ int wd409( const char *filename, const char *outputfile )
   wd = new wd409data();
 
   W.Branch("runnumber",&wd->runnumber,"runnumber/I"); 
-  W.Branch("eventnumber",&wd->eventnumber,"eventnumber/I"); 
+  W.Branch("evtnr",&wd->evtnr,"evtnr/I"); 
+  W.Branch("clock",&wd->clock,"clock/I"); 
 
   // begin words from FEM header
 
@@ -94,6 +95,16 @@ int wd409( const char *filename, const char *outputfile )
   branchstring += NRMOD;
   branchstring += "]/I";
   W.Branch("calcevenchecksum",wd->calcevenchecksum,branchstring); 
+
+  branchstring = "oddchcksum[";
+  branchstring += NRMOD;
+  branchstring += "]/I";
+  W.Branch("oddchecksum",wd->oddchecksum,branchstring); 
+  
+  branchstring = "calcoddchcksum[";
+  branchstring += NRMOD;
+  branchstring += "]/I";
+  W.Branch("calcoddchecksum",wd->calcoddchecksum,branchstring); 
 
   // end words from FEM header
 
@@ -181,7 +192,9 @@ int wd409( const char *filename, const char *outputfile )
 	//	digitizerv2_p->setNumSamples( NRSAM );
 
 	wd->runnumber = evt->getRunNumber();
-	wd->eventnumber = evt->getEvtSequence();
+	//	wd->evtnr = evt->getEvtSequence();
+	wd->evtnr = p->iValue(0,"EVTNR");
+	wd->clock = p->iValue(0,"CLOCK");
 	
 	/*
 	wd->nrmodules[ixmit] = p->iValue(0,"NRMODULES");
@@ -191,13 +204,16 @@ int wd409( const char *filename, const char *outputfile )
 	wd->parity[ixmit] = p->iValue(0,"PARITY");
 	*/
 	
+	wd->evenchecksum = p->iValue(0,"EVENCHECKSUM");
+	wd->calcevenchecksum = p->iValue(0,"CALCEVENCHECKSUM");
+	wd->oddchecksum = p->iValue(0,"ODDCHECKSUM");
+	wd->calcoddchecksum = p->iValue(0,"CALCODDCHECKSUM");
+
 	int i,j;
 	for (i = 0; i < NMODBYXMIT[ixmit]; i++) {
 	  wd->femslot[ibd] = p->iValue(i,"FEMSLOT");
 	  wd->femevtnr[ibd] = p->iValue(i,"FEMEVTNR");
 	  wd->femclock[ibd] = p->iValue(i,"FEMCLOCK");
-	  wd->evenchecksum[ibd] = p->iValue(i,"EVENCHECKSUM");
-	  wd->calcevenchecksum[ibd] = p->iValue(i,"CALCEVENCHECKSUM");
 	  ibd++;
 	}
 	
@@ -269,8 +285,8 @@ int wd409( const char *filename, const char *outputfile )
 	    brf.SetFunction( f1d, (Float_t) jminint, (Float_t) jmaxint);
 	    Bool_t statr = brf.Solve();
 	    if ( !statr ) {
-	      cout << "eventnumber,i: "
-		   << wd->eventnumber << ","
+	      cout << "evtnr,i: "
+		   << wd->evtnr << ","
 		   << ich << endl;
 	      cout << "statr: " << statr << endl;
 	      cout << "adcmpedmax: " 
@@ -292,8 +308,8 @@ int wd409( const char *filename, const char *outputfile )
 	    wd->peak[ich] = (Float_t) (inter.Eval( tmax ));
 	    // end interpolation around maximum adc
 	  } else {
-	    //	  cout << "No maximum found for eventnumber,ich: "
-	    //	       << wd->eventnumber << ","
+	    //	  cout << "No maximum found for evtnr,ich: "
+	    //	       << wd->evtnr << ","
 	    //	       << ich << endl;
 	    wd->time[ich] = 0.0;
 	    wd->peak[ich] = wd->pedestal[ich];
@@ -313,7 +329,7 @@ int wd409( const char *filename, const char *outputfile )
     delete evt;
   }
   
-  W.BuildIndex("runnumber", "eventnumber");
+  W.BuildIndex("runnumber", "evtnr");
   W.Write();
   f.Close();
 
